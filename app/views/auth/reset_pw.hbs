@@ -1,0 +1,30 @@
+<link rel="stylesheet" href="/css/login.css">
+<div class="center">
+    <h1>{{title}} - Password Reset</h1>
+    <form id="auth-form" data-type="resetPW">
+        <div class="form-floating mb-1">
+            <input type="email" class="form-control" id="email" placeholder="Email Address">
+            <label for="email">Email Address</label>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn login" style="width: 100% !important">Reset Password</button>
+        </div>
+    </form>
+</div>
+<script type="module">
+    document.getElementById("auth-form").addEventListener("submit", async e => {
+        e.preventDefault();
+        const SB_client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+        const email = document.getElementById("email").value;
+
+        const { data, error } = await SB_client.auth.resetPasswordForEmail(email, {
+            redirectTo: 'http://localhost:1337/update_pw',
+        })
+        if (error) {
+            alert("Invalid email or password")
+            console.log(error)
+        } else {
+            alert("Password reset email sent")
+        }
+    });
+</script>

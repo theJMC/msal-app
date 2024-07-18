@@ -1,0 +1,49 @@
+
+<link rel="stylesheet" href="/css/login.css">
+<div class="center">
+    <h1>{{title}} - Register</h1>
+    <form id="auth-form" data-type="login">
+        <div class="form-floating mb-1">
+            <input type="email" class="form-control" id="email" placeholder="Email Address">
+            <label for="email">Email Address</label>
+        </div>
+        <div class="form-floating mb-1">
+            <input type="password" class="form-control" id="password" placeholder="Password">
+            <label for="password">Password</label>
+        </div>
+        <div class="mb-3">
+            <button type="submit" class="btn login" style="width: 100% !important">Register</button>
+        </div>
+    </form>
+</div>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", async () => {
+        const SB_client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+
+        const { data: { user }} = await SB_client.auth.getUser()
+        if (user) {
+            window.location.href = "/dashboard"
+        }
+    });
+
+
+
+    document.getElementById("auth-form").addEventListener("submit", async e => {
+        e.preventDefault();
+        const SB_client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY)
+        const email = document.getElementById("email").value;
+        const password = document.getElementById("password").value;
+        const { data, error } = await SB_client.auth.signUp({
+            email: email,
+            password: password
+        })
+        if (data.user === null) {
+            alert("An Error Occured")
+            console.log(error)
+        } else {
+            window.location.href = "/dashboard"
+        }
+    });
+</script>
