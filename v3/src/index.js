@@ -8,7 +8,7 @@ import {
 } from "react-router-dom";
 
 import { GlobalState } from './globalState';
-
+import { RequireAuth } from './ProtectedRoute';
 
 import NavBar from "./components/navbar";
 
@@ -23,7 +23,11 @@ function Main() {
       <NavBar />
       <Routes>
         <Route exact path="/" element={<App />} />
-        <Route path="/dashboard" element={<Dashboard />} />
+        <Route path="/dashboard" element={
+          <RequireAuth>
+            <Dashboard />
+          </RequireAuth>
+          } />
         <Route path="/login" element={<LogInPage />} />
         <Route path="/logout" element={<LogOutPage />} />
         <Route path="/profile" element={<Profile />} />

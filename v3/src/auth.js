@@ -1,4 +1,4 @@
-
+import { supabase } from './supabaseClient'
 
 export function checkIsAuth(globalState) {
     /* True if Authn'ed  */
@@ -11,4 +11,26 @@ export function checkIsAuth(globalState) {
     } else { 
         return true
     }
+}
+
+export function auth(globalState) {
+    if (!checkIsAuth(globalState)) {
+        return false
+    } 
+
+    
+    supabase.auth.getUser().then(result => {
+        const { data: { user }, error } = result
+        if (error !== null) {
+            console.error("ERROR: ", error)
+            return false
+        }
+        if (user.id === JSON.parse(globalState.session).user.id) {
+            return true
+        } else {
+            return false
+        }
+    })
+
+    return null
 }
