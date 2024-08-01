@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 import { useNavigate } from 'react-router-dom'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { useGlobalState } from '../globalState'
 
@@ -26,10 +26,14 @@ function ErrorMsg({msg}) {
 
 
 export function LogInPage() {
-  const [, setGlobalState] = useGlobalState()
+  const [globalState, setGlobalState] = useGlobalState()
   const [errorMsg, setErrorMsg] = useState(null)
   const navigate = useNavigate()
   const { register, handleSubmit, resetField } = useForm()
+
+  useEffect(() => {
+    document.title = `${globalState.meta.title} - Log In`
+  })
 
 
   const onSubmit = async (formData) => {
