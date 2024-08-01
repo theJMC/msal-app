@@ -1,11 +1,12 @@
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import { NavLink } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 
 import { useGlobalState } from '../globalState'; 
 import { getEmail } from "../user"
+import { checkIsAuth } from '../auth'
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard' },
@@ -29,10 +30,11 @@ function LoginButton() {
 function ProfileDropdown() {
   const [globalState, ] = useGlobalState()
   const [isAuth, setIsAuth] = useState(false)
+  const location = useLocation()
 
   useEffect(() => {
-    setIsAuth(globalState.isAuth)
-  }, [globalState.isAuth])
+    setIsAuth(checkIsAuth(globalState))
+  }, [location.pathname, globalState])
 
   if (!isAuth) {
     return (<LoginButton />)
