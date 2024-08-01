@@ -35,6 +35,10 @@ export function RequireAuth({ children }) {
         checkAuth()
     }, [location.pathname, globalState.session])
 
+    // useEffect(() => {
+    //     setIsAuth(globalState.isAuth)
+    // }, [location.pathname, globalState.session, globalState.isAuth])
+
     if (!loaded) {
         return null; // render spinner
     }

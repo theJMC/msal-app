@@ -6,7 +6,8 @@ const defaults = {
     "meta": {
         "title": "Aurora Inns",
     },
-    "session": null
+    "session": null,
+    "isAuth": false
 }
 
 export const GlobalState = props => {
