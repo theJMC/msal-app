@@ -35,7 +35,9 @@ export default function Dashboard() {
   return (
     <div className="App">
       <p>This is the Dashboard</p>
-      <img src={catURL} alt="CATTO!" />
+      <div className="mx-auto h-80 w-80">
+        <img src={catURL} alt="CATTO!" />
+      </div>
     </div>
   );
 }
