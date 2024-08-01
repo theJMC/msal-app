@@ -11,14 +11,14 @@ const defaults = {
 
 export const GlobalState = props => {
     // declare the GlobalState 
-    const [globalState, setGlobalState] = useState(sessionStorage.getItem("globalState") ? JSON.parse(sessionStorage.getItem("globalState")) : defaults)
+    const [globalState, setGlobalState] = useState(localStorage.getItem("globalState") ? JSON.parse(localStorage.getItem("globalState")) : defaults)
 
     useEffect(() => {
-        sessionStorage.setItem("globalState", JSON.stringify(globalState))
+        localStorage.setItem("globalState", JSON.stringify(globalState))
     }, [globalState])
 
     useEffect(() => {
-        const stateElements = JSON.parse(sessionStorage.getItem("globalState"));
+        const stateElements = JSON.parse(localStorage.getItem("globalState"));
         if (stateElements) {
             setGlobalState(stateElements);
         }
