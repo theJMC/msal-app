@@ -1,12 +1,14 @@
 
 import { Disclosure, DisclosureButton, DisclosurePanel, Menu, MenuButton, MenuItem, MenuItems } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon, UserCircleIcon } from '@heroicons/react/24/outline'
-import { NavLink, useLocation } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { NavLink } from 'react-router-dom';
+// import { useEffect, useState } from 'react';
 
 import { useGlobalState } from '../globalState'; 
-import { getEmail } from "../user"
-import { checkIsAuth } from '../auth'
+// import { getEmail } from "../user"
+// import { checkIsAuth } from '../auth'
+import { AuthenticatedTemplate, UnauthenticatedTemplate, useMsal} from '@azure/msal-react';
+import { loginRequest } from '../authConfig';
 
 const navigation = [
   { name: 'Dashboard', href: '/dashboard' },
@@ -17,29 +19,28 @@ function classNames(...classes) {
 }
 
 function LoginButton() {
+  const { instance } = useMsal();
   return ( 
-    <a 
-      href="/login"
+    <button 
+      onClick={() => instance.loginRedirect(loginRequest)}
       className="text-white bg-gradient-to-r from-green-400 via-green-500 to-green-600 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-green-300 dark:focus:ring-green-800 font-medium rounded-lg text-sm p-2.5 text-center me-2"
     >
       Login
-    </a>
+    </button>
   )
 }
 
 function ProfileDropdown() {
-  const [globalState, ] = useGlobalState()
-  const [isAuth, setIsAuth] = useState(false)
-  const location = useLocation()
-
-  useEffect(() => {
-    setIsAuth(checkIsAuth(globalState))
-  }, [location.pathname, globalState])
-
-  if (!isAuth) {
-    return (<LoginButton />)
-  } else {
-    return (
+  const {instance} = useMsal();
+  const logoutRequest = {
+    postLogoutRedirectUri: "http://localhost:3000"
+  }
+  return (
+    <>
+      <UnauthenticatedTemplate>
+        <LoginButton />
+      </UnauthenticatedTemplate>
+      <AuthenticatedTemplate>
         <Menu as="div" className="relative ml-3">
             <div>
               <MenuButton 
@@ -57,17 +58,20 @@ function ProfileDropdown() {
             className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
             >
               <MenuItem>
-                <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">Profile - {getEmail(globalState)}</a>
+                <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">Profile</a>
               </MenuItem>
-            <MenuItem>
-                <a href={isAuth ? "/logout" : "/login"} className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                {isAuth ? "Log Out" : "Log In"}
+            <MenuItem
+              onClick={() => instance.logoutRedirect(logoutRequest)}>
+                <a href="/logout" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+                  Log Out
                 </a>
             </MenuItem>
             </MenuItems>
         </Menu>
-    )
-  }
+      </AuthenticatedTemplate>
+    
+    </>
+  )
 }
 
 
