@@ -5,6 +5,7 @@
   "dependencies": {
     "@azure/msal-browser": "^3.20.0",
     "@azure/msal-react": "^2.0.22",
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@headlessui/react": "^2.1.2",
     "@heroicons/react": "^2.1.5",
     "react": "^18.3.1",
