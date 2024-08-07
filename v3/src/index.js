@@ -66,7 +66,16 @@ function Main() {
             <Dashboard />
           </MsalAuthenticationTemplate>
           } />
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={
+          <MsalAuthenticationTemplate 
+            interactionType={InteractionType.Redirect}
+            authenticationRequest={loginRequest}
+            errorComponent={ErrorComponent}
+            loadingComponent={LoadingComponent}
+          >
+            <Profile />
+          </MsalAuthenticationTemplate>
+        } />
 
 
       </Routes>
