@@ -10,6 +10,24 @@ on:
       - msal-implementation
 
 jobs:
+  access_keyvault:
+    runs-on: ubuntu-latest
+
+    steps: 
+    - name: Checkout Code
+      uses: actions/checkout@v2
+
+    - name: Login to Azure
+      uses: azure/login@1
+      with: 
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    - name: Get Key Vault Secret
+      run: |
+        value1=$(az keyvault secret show --name AI-ClientID --vault-name AuroraInns-KV --query value -o tsv)
+        echo "Secret Value: $value1"
+        echo "AI-CLIENTID=$value1" >> $GITHUB_ENV
+
   build_and_deploy_job:
     if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
     runs-on: ubuntu-latest
@@ -34,7 +52,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env: 
           CI: false
-          REACT_APP_CLIENT_ID: "21f13cfa-c50f-44e4-ad56-6f2325324486"
+          REACT_APP_CLIENT_ID: $AI-CLIENTID
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
