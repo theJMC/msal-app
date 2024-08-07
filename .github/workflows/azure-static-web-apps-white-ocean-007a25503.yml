@@ -9,6 +9,9 @@ on:
     branches:
       - msal-implementation
 
+permissions:
+  id-token: write
+  contents: read
 jobs:
   access_keyvault:
     runs-on: ubuntu-latest
