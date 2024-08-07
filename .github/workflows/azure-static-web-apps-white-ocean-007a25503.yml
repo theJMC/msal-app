@@ -34,7 +34,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env: 
           CI: false
-          CLIENT_ID: "21f13cfa-c50f-44e4-ad56-6f2325324486"
+          REACT_APP_CLIENT_ID: "21f13cfa-c50f-44e4-ad56-6f2325324486"
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
