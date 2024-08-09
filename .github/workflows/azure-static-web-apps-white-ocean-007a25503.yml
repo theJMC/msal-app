@@ -58,7 +58,7 @@ jobs:
           ###### End of Repository/Build Configurations ######
         env: 
           CI: false
-          REACT_APP_CLIENT_ID: ${{ secrets.AI-CLIENTID }}
+          REACT_APP_CLIENT_ID: ${{ env.AI-CLIENTID }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
