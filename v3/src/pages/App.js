@@ -19,12 +19,12 @@ export default function App() {
             <div className="bg-white p-4 rounded shadow">
                 <h3 className="text-2xl font-bold mb-2">Our Menu</h3>
                 <p>Explore our wide range of drinks and delicious food.</p>
-                <a href="https://thejmc.net/ididntexpectthat.mp4" className="text-green-700 hover:underline">View Menu</a>
+                <a href="/menu" className="text-green-700 hover:underline">View Menu</a>
             </div>
             <div className="bg-white p-4 rounded shadow">
                 <h3 className="text-2xl font-bold mb-2">Upcoming Events</h3>
                 <p>Join us for live music, trivia nights, and more.</p>
-                <a href="https://thejmc.net/tisbutascratch.mp4" className="text-green-700 hover:underline">See Events</a>
+                <a href="https://thejmc.net/ididntexpectthat.mp4" className="text-green-700 hover:underline">See Events</a>
             </div>
             <div className="bg-white p-4 rounded shadow">
                 <h3 className="text-2xl font-bold mb-2">Contact Us</h3>

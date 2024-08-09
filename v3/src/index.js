@@ -24,6 +24,7 @@ import App from './pages/App';
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
 import Footer from './components/footer';
+import Menu from './pages/Menu';
 
 
 const configuration = {
@@ -56,6 +57,7 @@ function Main() {
       <NavBar />
       <Routes>
         <Route exact path="/" element={<App />} />
+        <Route exact path="/menu" element={<Menu />} />
 
         <Route path="/dashboard" element={
           <MsalAuthenticationTemplate 
