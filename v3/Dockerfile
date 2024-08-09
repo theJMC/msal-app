@@ -1,15 +1,15 @@
 # Use an official Node runtime as a parent image
-FROM node:19-alpine as build
+FROM node:19-alpine AS build
 # Set the working directory to /app
 WORKDIR /app
 # Copy the package.json and package-lock.json to the container
 COPY package*.json ./
 # Install dependencies
-#RUN npm install
+RUN npm install
 # Copy the rest of the application code to the container
 COPY . .
 # Build the React app
-#RUN npm run build
+RUN npm run build
 # Use an official Nginx runtime as a parent image
 FROM nginx:1.21.0-alpine
 # Copy the nginx.conf to the container
