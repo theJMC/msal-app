@@ -1,5 +1,5 @@
 
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {
@@ -9,7 +9,7 @@ import {
 } from "react-router-dom";
 
 
-import { GlobalState, useGlobalState } from './globalState';
+import { GlobalState } from './globalState';
 
 import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
 import { MsalAuthenticationTemplate, MsalProvider } from '@azure/msal-react'
@@ -23,6 +23,7 @@ import NavBar from "./components/navbar";
 import App from './pages/App';
 import Dashboard from './pages/Dashboard'
 import Profile from './pages/Profile'
+import Footer from './components/footer';
 
 
 const configuration = {
@@ -79,6 +80,7 @@ function Main() {
 
 
       </Routes>
+      <Footer />
     </Router>
   )
 }
