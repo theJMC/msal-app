@@ -45,7 +45,7 @@ function LoadingComponent() {
 }
 
 function Main() {
-  console.log(process.env.REACT_APP_CLIENT_ID)
+  
   // const authRequest = {
   //   scopes: ["openid", "profile"]
   // }
