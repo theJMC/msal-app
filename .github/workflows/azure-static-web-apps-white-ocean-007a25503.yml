@@ -16,6 +16,8 @@ jobs:
   access_keyvault:
     runs-on: ubuntu-latest
     name: Get Key Vault Secrets
+    outputs:
+      AI-CLIENTID: ${{ steps.get_secret.outputs.AI-CLIENTID }}
     steps: 
     - name: Checkout Code
       uses: actions/checkout@v2
@@ -28,6 +30,7 @@ jobs:
         subscription-id: ${{ secrets.AZURE_SUBSCRIPTION_ID }}
 
     - name: Get Key Vault Secret
+      id: get_secret
       run: |
         value1=$(az keyvault secret show --name AI-ClientID --vault-name AuroraInns-KV --query value -o tsv)
         echo "Secret Value: $value1"
@@ -45,7 +48,7 @@ jobs:
           lfs: false
       - name: Display ClientID
         run: |
-          echo "ClientID: ${{ jobs.access_keyvault.outputs.AI-CLIENTID }}"
+          echo "ClientID: ${{ needs.access_keyvault.outputs.AI-CLIENTID }}"
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
