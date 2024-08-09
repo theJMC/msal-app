@@ -43,6 +43,9 @@ jobs:
         with:
           submodules: true
           lfs: false
+      - name: Display ClientID
+        run: |
+          echo "ClientID: ${{ jobs.access_keyvault.outputs.AI-CLIENTID }}"
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
