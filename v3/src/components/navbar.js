@@ -30,6 +30,38 @@ function LoginButton() {
   )
 }
 
+function ProfileButton() {
+  const { instance } = useMsal();
+  return (
+    <Menu as="div" className="relative ml-3">
+        <div>
+          <MenuButton 
+            // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+            className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm p-2.5 text-center me-2"
+          >
+              <span className="absolute -inset-1.5" />
+              <span className="sr-only">Open user menu</span>
+              <UserCircleIcon className="h-6 w-6" aria-hidden="true" />
+              
+          </MenuButton>
+        </div>
+        <MenuItems
+        transition
+        className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
+        >
+          <MenuItem>
+            <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">Profile</a>
+          </MenuItem>
+        <MenuItem
+          onClick={() => instance.logoutRedirect(logoutRequest)}>
+            <a href="/logout" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
+              Log Out
+            </a>
+        </MenuItem>
+        </MenuItems>
+    </Menu>
+  )
+
 function ProfileDropdown() {
   const {instance} = useMsal();
   const logoutRequest = {
@@ -41,33 +73,7 @@ function ProfileDropdown() {
         <LoginButton />
       </UnauthenticatedTemplate>
       <AuthenticatedTemplate>
-        <Menu as="div" className="relative ml-3">
-            <div>
-              <MenuButton 
-                // className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm p-2.5 text-center inline-flex items-center me-2 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
-                className="text-white bg-gradient-to-r from-cyan-500 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-cyan-300 dark:focus:ring-cyan-800 font-medium rounded-lg text-sm p-2.5 text-center me-2"
-              >
-                  <span className="absolute -inset-1.5" />
-                  <span className="sr-only">Open user menu</span>
-                  <UserCircleIcon className="h-6 w-6" aria-hidden="true" />
-                  
-              </MenuButton>
-            </div>
-            <MenuItems
-            transition
-            className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
-            >
-              <MenuItem>
-                <a href="/profile" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">Profile</a>
-              </MenuItem>
-            <MenuItem
-              onClick={() => instance.logoutRedirect(logoutRequest)}>
-                <a href="/logout" className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100">
-                  Log Out
-                </a>
-            </MenuItem>
-            </MenuItems>
-        </Menu>
+        <ProfileButton />
       </AuthenticatedTemplate>
     
     </>
