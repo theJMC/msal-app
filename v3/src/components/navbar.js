@@ -33,7 +33,7 @@ function LoginButton() {
 function ProfileDropdown() {
   const {instance} = useMsal();
   const logoutRequest = {
-    postLogoutRedirectUri: "http://localhost:3000"
+    postLogoutRedirectUri: "https://aurorainns.thejmc.net"
   }
   return (
     <>
