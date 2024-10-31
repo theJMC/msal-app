@@ -9,7 +9,7 @@ COPY package*.json ./
 # Copy the rest of the application code to the container
 COPY . .
 # Build the React app
-#RUN npm run build
+RUN npm run build
 # Use an official Nginx runtime as a parent image
 FROM nginx:1.21.0-alpine
 # Copy the nginx.conf to the container
