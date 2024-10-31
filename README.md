@@ -1,19 +1,8 @@
-# Supabase App Template
+# MSAL Implementation Pub App
+> This project is not complete, but it all *should* work. 
 
-This is my template for an ExpressJS + Supabase projects. It includes the following:
-- Basic Layout
-- Navbar Partial
-- Main Page
-- 401/404 Page
-- Customisable Title
-- NPM Launch Scripts 
+This is the application I developed while on Summer placement at Microsoft in 2024. Feel free to deploy this into your own environment, and do what you will with it! 
 
-- Login
-- Logout
-- Register
-- Reset Password
+To Deploy this project, take a look at the [Deployment Documents](deploy.md), which should contain all the details needed. 
 
-- Cute Cat Pics
-
-Make sure to change the Supabase Credentials in the `app/static/js/common.js` file.
-The `app/.env` file is not necessary.s
+This project utilises Microsoft's Authentication Library (MSAL), alongside Azure Key Vault, and contains a deploy workflow to Azure Static Web Apps as well. 
