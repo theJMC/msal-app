@@ -14,8 +14,6 @@ COPY . .
 FROM nginx:1.21.0-alpine
 # Copy the nginx.conf to the container
 COPY nginx.conf /etc/nginx/conf.d/default.conf
-
-COPY certs/ /etc/nginx
 # Copy the React app build files to the container
 COPY --from=build /app/build /usr/share/nginx/html
 # Expose port 80 for Nginx

@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from 'react';
+
+import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import {
@@ -7,70 +8,81 @@ import {
   Route,
 } from "react-router-dom";
 
-import { GlobalState, useGlobalState } from './globalState';
-import { RequireAuth } from './ProtectedRoute';
-import { supabase } from './supabaseClient';
+
+import { GlobalState } from './globalState';
+
+import { InteractionType, PublicClientApplication } from '@azure/msal-browser';
+import { MsalAuthenticationTemplate, MsalProvider } from '@azure/msal-react'
+
+import { loginRequest } from "./authConfig"
+
+
 
 import NavBar from "./components/navbar";
 
 import App from './pages/App';
 import Dashboard from './pages/Dashboard'
-import {LogInPage, LogOutPage} from './pages/AuthRoutes'
 import Profile from './pages/Profile'
+import Footer from './components/footer';
+import Menu from './pages/Menu';
+
+
+const configuration = {
+  auth: {
+    clientId: process.env.REACT_APP_CLIENT_ID
+  }
+}
+
+const pca = new PublicClientApplication(configuration)
+
+
+
+function ErrorComponent({error}) {
+  console.log(error)
+  return <p>Error Occured</p>
+}
+
+function LoadingComponent() {
+  return <p>Authentication In Progress...</p>
+}
 
 function Main() {
-  // const [globalState, setGlobalState] = useGlobalState()
-  // const [loaded, setLoaded] = useState(false)
-
-
-  // useEffect(() => {
-  //   const checkAuth = async () => { 
-  //       setLoaded(false)
-  //       try {
-  //           const { data: { user }, error } = await supabase.auth.getUser() 
-  //           if (error !== null) {
-  //             setGlobalState("isAuth", false)
-  //           } else if (user.id === JSON.parse(globalState.session).user.id) {
-  //             setGlobalState("isAuth", true)
-  //           } else {
-  //             setGlobalState("isAuth", false)
-  //           }
-  //       } catch {
-  //         setGlobalState("isAuth", false)
-  //       } finally {
-  //           setLoaded(true)
-  //       }
-        
-  //   }
-  //   checkAuth()
-  // }, [globalState.isAuth, globalState.session, setGlobalState])
-
-  // if (!loaded) {
-  //   return null
+  
+  // const authRequest = {
+  //   scopes: ["openid", "profile"]
   // }
 
   return (
     <Router>
       <NavBar />
       <Routes>
-
-
         <Route exact path="/" element={<App />} />
+        <Route exact path="/menu" element={<Menu />} />
 
         <Route path="/dashboard" element={
-          <RequireAuth>
+          <MsalAuthenticationTemplate 
+            interactionType={InteractionType.Redirect}
+            authenticationRequest={loginRequest}
+            errorComponent={ErrorComponent}
+            loadingComponent={LoadingComponent}
+          >
             <Dashboard />
-          </RequireAuth>
+          </MsalAuthenticationTemplate>
           } />
-
-        <Route path="/login" element={<LogInPage />} />
-
-        <Route path="/logout" element={<LogOutPage />} />
-
-        <Route path="/profile" element={<Profile />} />
+        <Route path="/profile" element={
+          <MsalAuthenticationTemplate 
+            interactionType={InteractionType.Redirect}
+            authenticationRequest={loginRequest}
+            errorComponent={ErrorComponent}
+            loadingComponent={LoadingComponent}
+          >
+            <Profile />
+          </MsalAuthenticationTemplate>
+        } />
 
 
       </Routes>
+      <Footer />
     </Router>
   )
 }
@@ -79,8 +91,10 @@ function Main() {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   // <React.StrictMode>
-    <GlobalState>
+  <MsalProvider instance={pca}>
+    <GlobalState>  
       <Main />
     </GlobalState>
+  </MsalProvider>
   // </React.StrictMode>
 );
